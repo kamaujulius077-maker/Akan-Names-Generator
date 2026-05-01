@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akan Names Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+        <a href="photos.html">Gallery</a>
+    </nav>
+    <div class="container">
+        <h1>Find Your Akan Name</h1>
+        <p>Akan names are derived from the day of the week a person is born and their gender.</p>
+        <p>An Akan name carries deep cultural significance and often reflects the circumstances of a person's birth.</p>
+        <p>Discover the meaning behind your Akan name and connect with your cultural heritage.</p>
+        <form id="akanForm">
+            <label for="birthday">Enter your birthday:</label>
+            <input type="date" id="birthday" required>
+            <label>Gender:</label>
+            <div
+            class="gender-selection">
+                <input type="radio"
+                name="gender" value="male" id="male" required>Male
+            <input type="radio"
+            name="gender" value="female" id="female" required>Female
+            </div>
+            <button onclick="generateAkanName()">Find Name</button>
+        </form>
+        <div id="result" class="hidden">
+            <h2>Your Name is: <span id="nameOutput"></span></h2>
+            <p id="resultDescription"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
