@@ -58,7 +58,9 @@ button {
     text-align: center;
 }
 
-.hidden { display: none; }
+#result:not(.hidden) {
+    display: block!important;
+}
 
 .gallery {
     display: grid;

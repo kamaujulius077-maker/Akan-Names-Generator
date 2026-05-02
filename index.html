@@ -19,7 +19,7 @@
         <p>Discover the meaning behind your Akan name and connect with your cultural heritage.</p>
         <form id="akanForm">
             <label for="birthday">Enter your birthday:</label>
-            <input type="date" id="birthday" required>
+            <input type="date" id="birthday" required onchange="checkAndGenerate()">
             <label>Gender:</label>
             <div
             class="gender-selection">
@@ -27,7 +27,7 @@
                 name="gender" value="male" id="male" required>Male
             <input type="radio"
             name="gender" value="female" id="female" required>Female
-            </div>
+            </div> <!-- closes gender-selection -->
             <button onclick="generateAkanName()">Find Name</button>
         </form>
         <div id="result" class="hidden">
