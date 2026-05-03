@@ -12,14 +12,15 @@ function checkAndGenerate() {
 }
 function getDayOfWeek(dateString) {
     const date = new Date(dateString);
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    if (month < 3) {month += 12; year -= 1; }
-    const k = year % 100;
-    const j = Math.floor(year / 100);
-    const h = (day + Math.floor(13 * (month + 1) / 5) + Math. floor(k / 4) + Math.floor(j / 4) - 2* j) % 7;
-    return (h + 6) % 7; // 0=Sunday, 1=Monday... 6=Saturday
+    const DD = date.getDate();
+    let MM = date.getMonth() + 1;
+    let YYYY = date.getFullYear();
+    if (MM < 3) {MM += 12; YYYY -= 1; }
+    const CC = YYYY % 100;
+    const YY = YYYY / 100;
+   
+    const d = Math.floor(((CC / 4) - 2 * CC -1) + (5 * YY /4) + (26 * (MM + 1) / 10) + DD) % 7;
+    return (d + 7) % 7; // Ensure non-negative result
 }
 function generateAkanName() {
     // 1. Get values from HTML
