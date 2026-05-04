@@ -20,7 +20,9 @@ function getDayOfWeek(dateString) {
     const YY = YYYY / 100;
    
     const d = Math.floor(((CC / 4) - 2 * CC -1) + (5 * YY /4) + (26 * (MM + 1) / 10) + DD) % 7;
-    return (d + 7) % 7; // Ensure non-negative result
+    
+     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayName = days[d];
 }
 function generateAkanName() {
     // 1. Get values from HTML
@@ -40,8 +42,7 @@ function generateAkanName() {
 
     // 3. Calculate day of week - 0-Sunday, 1-Monday, ..., 6-Saturday
     const dayIndex = getDayOfWeek(dateInput);
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayName = days[dayIndex];
+   
 
     // 4. Akan names database - matches day day order
     const akanNames = {
