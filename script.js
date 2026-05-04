@@ -1,36 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('script.js loaded');
+    const form = document.getElementById('akanForm');
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        generateAkanName();
+    });
+
+    document.getElementById('birthday').addEventListener('change', checkAndGenerate);
+    document.querySelectorAll('input[name="gender"]').forEach(radio => {
+        radio.addEventListener('change', checkAndGenerate);
+    });
 });
 
 function checkAndGenerate() {
-    const date = document.getElementById('birthday').value;
-    const gender = document.querySelector('input[name="gender"]:checked');
+    const birthday = document.getElementById('birthday').value;
+    const genderChecked = document.querySelector('input[name="gender"]:checked');
 
-    if (date && gender) {
+    if (birthday && genderChecked) {
         generateAkanName();
     }
 }
-function getDayOfWeek(dateString) {
-    const date = new Date(dateString);
-    const DD = date.getDate();
-    let MM = date.getMonth() + 1;
-    let YYYY = date.getFullYear();
-    if (MM < 3) {MM += 12; YYYY -= 1; }
-    const CC = YYYY % 100;
-    const YY = YYYY / 100;
-   
-    const d = Math.floor(((CC / 4) - 2 * CC -1) + (5 * YY /4) + (26 * (MM + 1) / 10) + DD) % 7;
-    
-     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayName = days[d];
-}
-function generateAkanName() {
-    // 1. Get values from HTML
-    const dateInput = document.getElementById('birthday').value;
-    const genderInput = document.querySelector('input[name="gender"]:checked');
 
-    // 2. Validate
-    if (!dateInput) {
+function getDayNameFromDate(dateString) {
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+}
+
+function generateAkanName() {
+    const birthday = document.getElementById('birthday').value;
+    const genderInput = document.querySelector('input[name="gender"]:checked');
+    const resultContainer = document.getElementById('result');
+    const nameOutput = document.getElementById('nameOutput');
+    const descriptionOutput = document.getElementById('resultDescription');
+
+    if (!birthday) {
         alert('Please enter your birthday.');
         return;
     }
@@ -40,11 +48,12 @@ function generateAkanName() {
         return;
     }
 
-    // 3. Calculate day of week - 0-Sunday, 1-Monday, ..., 6-Saturday
-    const dayIndex = getDayOfWeek(dateInput);
-   
+    const dayName = getDayNameFromDate(birthday);
+    if (!dayName) {
+        alert('Please enter a valid date.');
+        return;
+    }
 
-    // 4. Akan names database - matches day day order
     const akanNames = {
         Sunday: { male: 'Kwasi', female: 'Akosua' },
         Monday: { male: 'Kwadwo', female: 'Adwoa' },
@@ -55,13 +64,10 @@ function generateAkanName() {
         Saturday: { male: 'Kwame', female: 'Ama' }
     };
 
-    // 5. Get Akan name
-    const akanName = akanNames[gender][dayName];
+    const gender = genderInput.value;
+    const akanName = akanNames[dayName][gender];
 
-    // 6. Display result
-    document.getElementById('nameOutput').textContent = akanName[gender][dayName];
-    document.getElementById('resultDescription').textContent = `You were born on ${dayName}.`;
-
-    //7. Show the result div - remove hidden class
-    document.getElementById('result').classList.remove('hidden');
+    nameOutput.textContent = akanName;
+    descriptionOutput.textContent = `You were born on ${dayName}. Your Akan name is ${akanName}.`;
+    resultContainer.classList.remove('hidden');
 }
